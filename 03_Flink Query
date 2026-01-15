@@ -2,7 +2,7 @@ CREATE
     ALGORITHM = UNDEFINED 
     DEFINER = `root`@`localhost` 
     SQL SECURITY DEFINER
-VIEW `dwbi`.`flink_query1` AS
+VIEW `dwbi`.`flink_query` AS
     SELECT 
         `dwbi`.`fact_sales_order`.`order_id` AS `Order_ID`,
         `dwbi`.`fact_sales_order`.`hub_id` AS `Hub_ID`,
@@ -38,9 +38,10 @@ VIEW `dwbi`.`flink_query1` AS
             `dwbi`.`fact_sales_order`.`picker_start_ts`,
             `dwbi`.`fact_sales_order`.`picker_end_ts`) AS `Picking_Speed_Min`
     FROM
-        (((`dwbi`.`fact_sales_order`
+        ((((`dwbi`.`fact_sales_order`
         LEFT JOIN `dwbi`.`dim_hub` ON ((`dwbi`.`fact_sales_order`.`hub_id` = `dwbi`.`dim_hub`.`hub_id`)))
         LEFT JOIN `dwbi`.`dim_warehouse_associate` ON (((`dwbi`.`fact_sales_order`.`picker_id` = `dwbi`.`dim_warehouse_associate`.`picker_id`)
             AND (`dwbi`.`fact_sales_order`.`hub_id` = `dwbi`.`dim_warehouse_associate`.`hub_id`))))
         LEFT JOIN `dwbi`.`dim_delivery_associate` ON (((`dwbi`.`fact_sales_order`.`rider_id` = `dwbi`.`dim_delivery_associate`.`rider_id`)
             AND (`dwbi`.`fact_sales_order`.`hub_id` = `dwbi`.`dim_delivery_associate`.`hub_id`))))
+        LEFT JOIN `dwbi`.`dim_time` ON ((`dwbi`.`fact_sales_order`.`order_assigned_ts` = `dwbi`.`dim_time`.`Time_ID`)))
