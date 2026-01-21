@@ -42,7 +42,7 @@ order_id = 1
 for hub in hubs:
     for month in months:
         # ~50k rows per hub-month
-        num_orders = random.randint(45_000, 55_000)
+        num_orders = random.randint(190_000, 210_000)
         rows = []
 
         for _ in range(num_orders):
